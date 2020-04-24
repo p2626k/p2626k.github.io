@@ -27,15 +27,15 @@
 <meta property="og:site_name" content="Catherine&#39;s blog">
 <meta property="og:description" content="安裝Windows Server 2016&#x2F;2019試用版，在180天後將會過期，過期後將發生每小時自動關機，解決方式為透過啟動 PowerShell 延長試用天數，最多可以操作六次，也就是延長三年">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://p2626k.github.io/2020/04/24/trial-period/images/window-server/windows-server-1.png">
-<meta property="og:image" content="https://p2626k.github.io/2020/04/24/trial-period/images/window-server/windows-server-2.png">
-<meta property="og:image" content="https://p2626k.github.io/2020/04/24/trial-period/images/window-server/windows-server-3.png">
-<meta property="og:image" content="https://p2626k.github.io/2020/04/24/trial-period/images/window-server/windows-server-4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-4.png">
 <meta property="article:published_time" content="2020-04-24T05:41:08.000Z">
-<meta property="article:modified_time" content="2020-04-24T07:35:41.891Z">
+<meta property="article:modified_time" content="2020-04-24T08:06:14.933Z">
 <meta property="article:author" content="Catherine Chen">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://p2626k.github.io/2020/04/24/trial-period/images/window-server/windows-server-1.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-1.png">
 
 <link rel="canonical" href="https://p2626k.github.io/2020/04/24/trial-period/">
 
@@ -186,7 +186,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-04-24 13:41:08 / Modified: 15:35:41" itemprop="dateCreated datePublished" datetime="2020-04-24T13:41:08+08:00">2020-04-24</time>
+              <time title="Created: 2020-04-24 13:41:08 / Modified: 16:06:14" itemprop="dateCreated datePublished" datetime="2020-04-24T13:41:08+08:00">2020-04-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -223,19 +223,19 @@
 <p><a href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2016/" target="_blank" rel="noopener">https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2016/</a></p>
 <p><a href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019/" target="_blank" rel="noopener">https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019/</a></p>
 <h2 id="確認到期天數"><a href="#確認到期天數" class="headerlink" title="確認到期天數"></a>確認到期天數</h2><h3 id="2種方式確認"><a href="#2種方式確認" class="headerlink" title="2種方式確認"></a>2種方式確認</h3><p>1.使用桌面右下角確認：</p>
-<p><img src="images/window-server/windows-server-1.png" alt="桌面圖片"></p>
+<p><img src="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-1.png" alt="桌面圖片"></p>
 <p>2.使用 PowerShell 確認：</p>
 <p>  啟動 PowerShell 並運行 slmgr</p>
 <p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ slmgr -dlv</span><br></pre></td></tr></table></figure>
 
-<p><img src="images/window-server/windows-server-2.png" alt="PowerShell顯示剩餘日期與次數"></p>
+<p><img src="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-2.png" alt="PowerShell顯示剩餘日期與次數"></p>
 <h2 id="如何延長期限"><a href="#如何延長期限" class="headerlink" title="如何延長期限"></a>如何延長期限</h2><h3 id="透過-PowerShell-運行-slmgr-rearm-將其延長180天"><a href="#透過-PowerShell-運行-slmgr-rearm-將其延長180天" class="headerlink" title="透過 PowerShell 運行 slmgr -rearm 將其延長180天"></a>透過 PowerShell 運行 slmgr -rearm 將其延長180天</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ slmgr -rearm</span><br></pre></td></tr></table></figure>
 
-<p><img src="images/window-server/windows-server-3.png" alt="PowerShell運行延長180天"></p>
+<p><img src="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-3.png" alt="PowerShell運行延長180天"></p>
 <h3 id="重新啟動電腦"><a href="#重新啟動電腦" class="headerlink" title="重新啟動電腦"></a>重新啟動電腦</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ Restart-Computer</span><br></pre></td></tr></table></figure>
@@ -244,7 +244,7 @@
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ slmgr -dli</span><br></pre></td></tr></table></figure>
 
-<p><img src="images/window-server/windows-server-4.png" alt="PowerShell運行結果"></p>
+<p><img src="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-4.png" alt="PowerShell運行結果"></p>
 <table><tr><td bgcolor=#008800>此篇文章僅記錄整理遇到問題的解法</td></tr></table>
 
 <h2 id="Refernce"><a href="#Refernce" class="headerlink" title="Refernce"></a>Refernce</h2><p>[文章出處]<a href="https://sid-500.com/2017/08/08/windows-server-2016-evaluation-how-to-extend-the-trial-period/" target="_blank" rel="noopener">https://sid-500.com/2017/08/08/windows-server-2016-evaluation-how-to-extend-the-trial-period/</a></p>
