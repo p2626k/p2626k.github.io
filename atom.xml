@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://p2626k.github.io/"/>
-  <updated>2020-04-22T13:40:21.506Z</updated>
+  <updated>2020-04-24T07:35:41.891Z</updated>
   <id>https://p2626k.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何延長 Windows Server 2016/2019 試用版 的適用期</title>
+    <link href="https://p2626k.github.io/2020/04/24/trial-period/"/>
+    <id>https://p2626k.github.io/2020/04/24/trial-period/</id>
+    <published>2020-04-24T05:41:08.000Z</published>
+    <updated>2020-04-24T07:35:41.891Z</updated>
+    
+    <content type="html"><![CDATA[<p>安裝Windows Server 2016/2019試用版，在180天後將會過期，過期後將發生每小時自動關機，解決方式為透過啟動 PowerShell 延長試用天數，最多可以操作六次，也就是延長三年</p><a id="more"></a><p>若您尚未下載，請在此處下載：</p><p><a href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2016/" target="_blank" rel="noopener">https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2016/</a></p><p><a href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019/" target="_blank" rel="noopener">https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019/</a></p><h2 id="確認到期天數"><a href="#確認到期天數" class="headerlink" title="確認到期天數"></a>確認到期天數</h2><h3 id="2種方式確認"><a href="#2種方式確認" class="headerlink" title="2種方式確認"></a>2種方式確認</h3><p>1.使用桌面右下角確認：</p><p><img src="images/window-server/windows-server-1.png" alt="桌面圖片"></p><p>2.使用 PowerShell 確認：</p><p>  啟動 PowerShell 並運行 slmgr</p><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ slmgr -dlv</span><br></pre></td></tr></table></figure><p><img src="images/window-server/windows-server-2.png" alt="PowerShell顯示剩餘日期與次數"></p><h2 id="如何延長期限"><a href="#如何延長期限" class="headerlink" title="如何延長期限"></a>如何延長期限</h2><h3 id="透過-PowerShell-運行-slmgr-rearm-將其延長180天"><a href="#透過-PowerShell-運行-slmgr-rearm-將其延長180天" class="headerlink" title="透過 PowerShell 運行 slmgr -rearm 將其延長180天"></a>透過 PowerShell 運行 slmgr -rearm 將其延長180天</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ slmgr -rearm</span><br></pre></td></tr></table></figure><p><img src="images/window-server/windows-server-3.png" alt="PowerShell運行延長180天"></p><h3 id="重新啟動電腦"><a href="#重新啟動電腦" class="headerlink" title="重新啟動電腦"></a>重新啟動電腦</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ Restart-Computer</span><br></pre></td></tr></table></figure><h3 id="重新啟動後，打開-PowerShell-並檢查您的設置"><a href="#重新啟動後，打開-PowerShell-並檢查您的設置" class="headerlink" title="重新啟動後，打開 PowerShell 並檢查您的設置"></a>重新啟動後，打開 PowerShell 並檢查您的設置</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ slmgr -dli</span><br></pre></td></tr></table></figure><p><img src="images/window-server/windows-server-4.png" alt="PowerShell運行結果"></p><table><tr><td bgcolor=#008800>此篇文章僅記錄整理遇到問題的解法</td></tr></table><h2 id="Refernce"><a href="#Refernce" class="headerlink" title="Refernce"></a>Refernce</h2><p>[文章出處]<a href="https://sid-500.com/2017/08/08/windows-server-2016-evaluation-how-to-extend-the-trial-period/" target="_blank" rel="noopener">https://sid-500.com/2017/08/08/windows-server-2016-evaluation-how-to-extend-the-trial-period/</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;安裝Windows Server 2016/2019試用版，在180天後將會過期，過期後將發生每小時自動關機，解決方式為透過啟動 PowerShell 延長試用天數，最多可以操作六次，也就是延長三年&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="WindowServer" scheme="https://p2626k.github.io/categories/WindowServer/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
