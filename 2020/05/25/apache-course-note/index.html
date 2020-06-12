@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"p2626k.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="僅以此紀錄線上課程 Linux雲端伺服器，用AWS暸解Apache與Nginx筆記">
+<meta property="og:type" content="article">
+<meta property="og:title" content="apache 線上課程筆記">
+<meta property="og:url" content="https://p2626k.github.io/2020/05/25/apache-course-note/index.html">
+<meta property="og:site_name" content="Catherine&#39;s blog">
+<meta property="og:description" content="僅以此紀錄線上課程 Linux雲端伺服器，用AWS暸解Apache與Nginx筆記">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-05-25T08:24:20.000Z">
+<meta property="article:modified_time" content="2020-06-08T00:51:21.919Z">
+<meta property="article:author" content="Catherine Chen">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://p2626k.github.io/2020/05/25/apache-course-note/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>apache 線上課程筆記 | Catherine's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164797917-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-164797917-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Catherine's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Catherine's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Knowledge makes humble, ignorance makes proud.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://p2626k.github.io/2020/05/25/apache-course-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Catherine Chen">
+      <meta itemprop="description" content="Knowledge makes humble, ignorance makes proud.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Catherine's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          apache 線上課程筆記
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-25 16:24:20" itemprop="dateCreated datePublished" datetime="2020-05-25T16:24:20+08:00">2020-05-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-08 08:51:21" itemprop="dateModified" datetime="2020-06-08T08:51:21+08:00">2020-06-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Apache/" itemprop="url" rel="index"><span itemprop="name">Apache</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>僅以此紀錄線上課程 <a href="https://progressbar.tw/courses/13" target="_blank" rel="noopener">Linux雲端伺服器，用AWS暸解Apache與Nginx</a>筆記</p>
+<a id="more"></a>
+
+<h1 id="安裝Apache2與建立第一個網頁"><a href="#安裝Apache2與建立第一個網頁" class="headerlink" title="安裝Apache2與建立第一個網頁"></a>安裝Apache2與建立第一個網頁</h1><ul>
+<li>指令 netstat -plnt 可以看到監聽的port號 <ul>
+<li>p代表顯示每個網路連接埠是被哪個程式使用</li>
+<li>t代表tcp</li>
+<li>n代表不自動解析 DNS、連接埠名稱與使用者名稱，這樣可以加速 netstat 的執行速度</li>
+<li>l代表列出所有 listening 狀態的連接埠   <blockquote>
+<p>Linux 的 netstat 指令可以用來查詢各種網路相關資訊，檢測各種網路相關的問題。 在 Linux 系統中若要檢查網路相關的問題，netstat是一個很常使用到的指令之一，雖然他只能在本機執行，但是他可以列出非常多很有用的資訊，像 socket、TCP、UDP、IP 與 ethernet 層的各種資訊都可以利用 netstat 來查詢。<br>一般遇到問題時，第一個檢查步驟就是查閱系統記錄檔（log），必要時可以嘗試提升記錄層級（logging level）來獲得更詳盡的資訊。如果 netstat 所提供的資訊不夠時，亦可使用 Wireshark、tshark、tcpdump 或 nmap 等檢測工具。<br>在每個 Linux 系統中預設都會有安裝 netstat，而且他不需要使用管理者權限即可執行，也同時支援 IPv4 與 IPv6，不過不同的 UNIX/Linux 系統可能在參數上會有一些差異，所以如果您寫好的指令要在不同的系統上執行時，可能要稍微注意一下。<br><a href="https://blog.gtwang.org/linux/linux-netstat-command-examples/" target="_blank" rel="noopener"> 使用 Netstat 指令檢測網路的技巧 </a></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>安裝Apache會自動監聽80 port<ul>
+<li>指令 <p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install apache2</span><br></pre></td></tr></table></figure>
+
+<h1 id="改變Ubuntu-監聽port號與初探反向代理"><a href="#改變Ubuntu-監聽port號與初探反向代理" class="headerlink" title="改變Ubuntu 監聽port號與初探反向代理"></a>改變Ubuntu 監聽port號與初探反向代理</h1><ul>
+<li>改變監聽port號可能是因為安全性問題，不想讓其他人任意連接網站或是任意爬蟲<ul>
+<li>可影響檔案為<ul>
+<li>apache2.conf(設定Directory裡的資料夾路徑，管理/var/www/這個資料夾) </li>
+<li>ports.conf(可以直接改port號)</li>
+<li>site-enabled資料夾(影響的是更細節的東西，virtualhost是可以做更細部的調整)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>反向代理(使用virtual box時)<ol>
+<li>用virtual box時我們會連到自己本機的8800 port(virtual box設定)</li>
+<li>由127.0.0.1:8800轉到virtual box上主機的80 port </li>
+</ol>
+</li>
+</ul>
+<h1 id="ufw防火牆設定"><a href="#ufw防火牆設定" class="headerlink" title="ufw防火牆設定"></a>ufw防火牆設定</h1><ul>
+<li>預設未開啟，開啟後若無特別設定則會關閉所有連入要求</li>
+<li>若要開啟可先查看防火牆狀態，操作如下<ol>
+<li>指令 sudo ufw app list(可得知防火牆現在允許通過的applications) </li>
+<li>指令 sudo ufw app info OpenSSH(確認 OpenSSH 細節)</li>
+<li>指令 sudo ufw allow 22/tcp(允許tcp 協定 22 port access)</li>
+<li>指令 sudo ufw enable(打開防火牆)</li>
+<li>指令 sudo ufw status(查看防火牆狀態)</li>
+<li>指令 sudo ufw status verbose(查看預設狀態，預設allow (incoming), allow (outgoing))</li>
+</ol>
+</li>
+</ul>
+<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw app list</span><br><span class="line">Available applications:</span><br><span class="line">  Apache</span><br><span class="line">  Apache Full</span><br><span class="line">  Apache Secure</span><br><span class="line">  CUPS</span><br><span class="line">  OpenSSH</span><br><span class="line"></span><br><span class="line">$ sudo ufw app info OpenSSH</span><br><span class="line">Profile: OpenSSH</span><br><span class="line">Title: Secure shell server, an rshd replacement</span><br><span class="line">Description: OpenSSH is a free implementation of the Secure Shell protocol.</span><br><span class="line"></span><br><span class="line">Port:</span><br><span class="line">  22/tcp</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ sudo ufw allow 22/tcp</span><br><span class="line">Rules updated</span><br><span class="line">Rules updated (v6)</span><br><span class="line"></span><br><span class="line">$ sudo ufw status</span><br><span class="line">Status: active</span><br><span class="line"></span><br><span class="line">To                         Action      From</span><br><span class="line">--                         ------      ----</span><br><span class="line">22/tcp                     ALLOW       Anywhere</span><br><span class="line">80/tcp                     ALLOW       Anywhere</span><br><span class="line">443/tcp                    ALLOW       Anywhere</span><br><span class="line">22/tcp (v6)                ALLOW       Anywhere (v6)</span><br><span class="line">80/tcp (v6)                ALLOW       Anywhere (v6)</span><br><span class="line">443/tcp (v6)               ALLOW       Anywhere (v6)</span><br><span class="line"></span><br><span class="line">$ sudo ufw status verbose</span><br><span class="line">Status: active</span><br><span class="line">Logging: on (low)</span><br><span class="line">Default: allow (incoming), allow (outgoing), disabled (routed)</span><br><span class="line">New profiles: skip</span><br><span class="line"></span><br><span class="line">To                         Action      From</span><br><span class="line">--                         ------      ----</span><br><span class="line">22/tcp                     ALLOW IN    Anywhere</span><br><span class="line">80/tcp                     ALLOW IN    Anywhere</span><br><span class="line">443/tcp                    ALLOW IN    Anywhere</span><br><span class="line">22/tcp (v6)                ALLOW IN    Anywhere (v6)</span><br><span class="line">80/tcp (v6)                ALLOW IN    Anywhere (v6)</span><br><span class="line">443/tcp (v6)               ALLOW IN    Anywhere (v6)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a href="https://www.arthurtoday.com/2013/12/ubuntu-ufw-add-firewall-rules.html" target="_blank" rel="noopener">Ubuntu 用 ufw 指令快速啟用和設定防火牆</a> </p>
+</blockquote>
+<h1 id="3種Apache-service的開關方式與它隱含的意思-systemctl-service-apache2"><a href="#3種Apache-service的開關方式與它隱含的意思-systemctl-service-apache2" class="headerlink" title="3種Apache service的開關方式與它隱含的意思(systemctl, service, apache2)"></a>3種Apache service的開關方式與它隱含的意思(systemctl, service, apache2)</h1><ul>
+<li>一般 Linux系統進來時讀的設定檔為/etc/init.d</li>
+<li>3種Apache service的開關方式<ol>
+<li>systemctl<ul>
+<li>開啟sudo systemctl start apache2.service<ul>
+<li>可先查看要開啟的服務清單，sudo systemctl list-unit-files </li>
+</ul>
+</li>
+<li>關閉sudo systemctl stop apache2.service</li>
+<li>查看狀態sudo systemctl status apache2.service</li>
+</ul>
+</li>
+<li>service(通用型給系統使用)<ul>
+<li>開啟sudo service apache2 start</li>
+<li>關閉sudo sudo service apache2 stop</li>
+<li>查看狀態sudo service apache2 status</li>
+</ul>
+</li>
+<li>apache2<ul>
+<li>開啟sudo /etc/init.d/apache2 start</li>
+<li>關閉sudo /etc/init.d/apache2 start stop</li>
+<li>查看狀態sudo /etc/init.d/apache2 status <blockquote>
+<p>三種指令之前其實是有關係的，但要改設定或起服務時要小心，如果沒有改在根源，抑或是用不同的指令起服務跟關閉服務，會造成有些東西有作用有些東西沒作用，需要注意<br>原理：systemctl、service 都會執行 /usr/sbin/apache2裡的 apache2ctl，apache2ctl 會用到apache2  </p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h1 id="etc-底下的apache2檔案分佈用途介紹-amp-Apache-conf-詳細介紹-一-amp-Apache-conf-二-如何簡單的搞砸系統安全性-Directory-denied-granted-DocumentRoot"><a href="#etc-底下的apache2檔案分佈用途介紹-amp-Apache-conf-詳細介紹-一-amp-Apache-conf-二-如何簡單的搞砸系統安全性-Directory-denied-granted-DocumentRoot" class="headerlink" title="etc 底下的apache2檔案分佈用途介紹 &amp; Apache.conf 詳細介紹(一) &amp; Apache.conf(二) 如何簡單的搞砸系統安全性 [Directory, denied, granted, DocumentRoot]"></a>etc 底下的apache2檔案分佈用途介紹 &amp; Apache.conf 詳細介紹(一) &amp; Apache.conf(二) 如何簡單的搞砸系統安全性 [Directory, denied, granted, DocumentRoot]</h1><ol>
+<li>apache2.conf<ul>
+<li>載入ports.conf、conf-enabled、mods-enabled、sites-enabled</li>
+<li>設定的內容都是全域性的</li>
+<li>VirtualHost(sites-enabled中設定)就可以達到同一台主機有兩個不同的網站，可以透過不同的DomainName進到不同的網進到不同的網站</li>
+<li>Include &amp; InculudeOptional 的差異是 Include 是不能沒有，InculudeOptional 是沒有也沒關係</li>
+<li>LogFormat 選擇 Log 格式，不同種的格式會在 sites-enabled/000-default.conf 裡查看，CustomLog 的內容 ${APACHE_LOG_DIR}/access.log combind，真實路徑可在 /etc/apache2/envvars 查看</li>
+<li>Directory 設定從apache進來的人可以看到哪些資料夾內容</li>
+</ul>
+</li>
+<li>envvars<ul>
+<li>環境變數、起服務user &amp; group、log file 位置</li>
+</ul>
+</li>
+<li>ports.conf<ul>
+<li>設定監聽port號</li>
+</ul>
+</li>
+<li>conf-enabled<ul>
+<li>其他配置檔，enabled代表會使用的，會去連結available檔</li>
+</ul>
+</li>
+<li>conf-available</li>
+<li>mods-enabled<ul>
+<li>依功能開啟模組</li>
+</ul>
+</li>
+<li>mods-available</li>
+<li>sites-enabled<ul>
+<li>網站功能相關</li>
+</ul>
+</li>
+<li>sites-available</li>
+<li>magic <ul>
+<li>像是enum的概念，可以自行決定數字代表什麼 </li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>vim指令 set nu 及顯示行數<br>Linux 指令 top 可以查看目前所有進行中的程序</p>
+</blockquote>
+<h1 id="補充-Option詳解"><a href="#補充-Option詳解" class="headerlink" title="[補充] Option詳解"></a>[補充] Option詳解</h1><ul>
+<li>ALL<ul>
+<li>打開所有權限除了 MultiViews</li>
+</ul>
+</li>
+<li>ExecCGI<ul>
+<li>共同的通訊協定，可以顯示不同符合CGI協定的程式語言檔案</li>
+</ul>
+</li>
+<li>FollowSymLinks<ul>
+<li>通常都會打開，算有點重要，開啟才能看到軟連結項目</li>
+</ul>
+</li>
+<li>Includes<ul>
+<li>動態用法，如果今天html裡還鑲html，現在動態產生html都是直接使用程式語言，一般建議打開Include 也要打開 IncludesNOEXEC，是一個安全性措施，因為Include 可以使用 server IncludesNOEXEC 可以讓執行的指令消失</li>
+</ul>
+</li>
+<li>IncludesNOEXEC</li>
+<li>Indexes<ul>
+<li>若沒有出現 *index.html，就會直接顯示根目錄</li>
+</ul>
+</li>
+<li>MultiViews<ul>
+<li>很常在現行框架被實現，不見得是使用apache來做到這件事，可以在request 上設置一些header的分隔，使之回應你不同的結果</li>
+</ul>
+</li>
+<li>SymLinksIfOwnerMatch<ul>
+<li>如果今天做一個軟連結，他的owner跟檔案的owner是同一個的話，他就會顯示出來，如果不同就不會顯示，會被FollowSymLinks影響，如果FollowSymLinks開啟，無論SymLinksIfOwnerMatch有沒有開啟，檔案都會顯示出來</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><a href="https://httpd.apache.org/docs/2.4/mod/core.html#options" target="_blank" rel="noopener">https://httpd.apache.org/docs/2.4/mod/core.html#options</a>  </p>
+</blockquote>
+<h1 id="利用不同port號架設多重站台-VirtualHost-a2ensite-a2dissite"><a href="#利用不同port號架設多重站台-VirtualHost-a2ensite-a2dissite" class="headerlink" title="利用不同port號架設多重站台(VirtualHost, a2ensite, a2dissite)"></a>利用不同port號架設多重站台(VirtualHost, a2ensite, a2dissite)</h1><ul>
+<li>Directory <ul>
+<li>AllowOverride 是指.htaccess的權限</li>
+</ul>
+</li>
+<li>sites-enabled<ul>
+<li>指令 a2ensite 000-default 將 000-default.conf 從 sites-available 加回 sites-enabled(因為之前課程有刪除)，如果需要刪除可以透過 a2dissite</li>
+<li>需重啟apache</li>
+<li>sites-available 中做更動，建議使用自己的conf cp 000-default改成自己的</li>
+</ul>
+</li>
+<li>記得將ports.conf中多增加一個監聽的port號(同VirtualHost)</li>
+<li>sudo ufw allow 8480/tcp 若有開啟防火牆請允許此port號</li>
+</ul>
+<blockquote>
+<p>virtual host是一種網路技術，可以讓多個主機名稱（host name），在一個單一伺服器（或是一個伺服器組）上運作，而且可以分開支援每個單一的主機名稱。虛擬主機可以執行多個網站或服務的技術。虛擬並非指不存在，而是指空間是由實體的伺服器延伸而來，其硬體系統可以是基於伺服器群，或者單個伺服器。<br>所以簡單來說，它就像是把你的伺服器切成好幾段，分配給你每一個網站的概念。那麼現在就讓我們來看看要如何操作吧。</p>
+</blockquote>
+<blockquote>
+<p><a href="https://blog.hellosanta.com.tw/%E7%B6%B2%E7%AB%99%E8%A8%AD%E8%A8%88/%E5%BE%8C%E7%AB%AF/%E5%9C%A8linux%E8%88%87mac%E4%B8%8B%E7%94%A8apache%E4%BD%BF%E7%94%A8virtual-host" target="_blank" rel="noopener">在linux與mac下用apache使用Virtual host</a></p>
+</blockquote>
+<h1 id="網域網址設定，利用不同網址Domain架設多站台"><a href="#網域網址設定，利用不同網址Domain架設多站台" class="headerlink" title="網域網址設定，利用不同網址Domain架設多站台"></a>網域網址設定，利用不同網址Domain架設多站台</h1><ul>
+<li>先買網址</li>
+<li>cp 000-default.conf demo.XXX.tw.conf</li>
+<li>cp 000-default.conf test.XXX.tw.conf</li>
+<li>進到各自的conf檔案修改 <ul>
+<li>ServerName demo.XXX.tw,test.XXX.tw</li>
+<li>DocumentRoot /var/www/demo(須自行創建，test的部分只需將demo換成test)</li>
+</ul>
+</li>
+<li>改完之後sudo a2ensite demo.XXX.tw.conf </li>
+<li>sudo systemctl reload apache2</li>
+<li>sudo mkdir /var/www/demo(test也要)</li>
+<li>各自建立index.html</li>
+<li>檢查 apache2.conf Directory /var/www有打開 </li>
+<li>sudo systemctl reload apache2</li>
+</ul>
+<h1 id="利用Rewrite-module-把index-html-導向首頁路徑-mod-rewrite"><a href="#利用Rewrite-module-把index-html-導向首頁路徑-mod-rewrite" class="headerlink" title="利用Rewrite module 把index.html 導向首頁路徑(mod_rewrite)"></a>利用Rewrite module 把index.html 導向首頁路徑(mod_rewrite)</h1><ul>
+<li>將需要的html檔準備好</li>
+<li>將 /etc/apache2/sites-available/demo.XXX.tw.conf 中的 RewriteEngine 改成on ，可以看到RewriteRule ^index.html$ /，代表只要是index開頭 html結尾的都導入根目錄</li>
+<li>必須使用IFModule包起來，代表如果符合時，使用的module為mod_rewrite<ul>
+<li>R=301就是導到301，301是永久，302是暫時 </li>
+<li>L是如果已經比對過就不再比對，可以節省效能<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;IFModule mod_rewrite.c&gt;</span><br><span class="line">    RewriteEngine On</span><br><span class="line">    RewriteRule ^/index\.html$ / [R=301,L]</span><br><span class="line">&lt;/IFModule&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>確認mod_rewrite存不存在，不存在要從mods-avaliable 加回 mods-enabled</li>
+<li>sudo systemctl reload apache2</li>
+</ul>
+<h1 id="使用htaccess，RewriteRule在VirtualHost與htaccess之間的陷阱"><a href="#使用htaccess，RewriteRule在VirtualHost與htaccess之間的陷阱" class="headerlink" title="使用htaccess，RewriteRule在VirtualHost與htaccess之間的陷阱"></a>使用htaccess，RewriteRule在VirtualHost與htaccess之間的陷阱</h1><ul>
+<li>.htaccess不需要reload apache</li>
+<li>小心[R=301,L] 不要有空格</li>
+<li>當直接寫在.htaccess時，不需要加根目錄^/index.html$ ，只需寫成^index.html$，若將此寫回/etc/apache2/sites-available/demo.XXX.tw.conf中，則不起作用，原因參考apache2官方文件，如果寫在.htaccess裡面不需要加根目錄，反之則需要，若要讓兩個地方寫法相同，則須在/etc/apache2/sites-available/demo.XXX.tw.conf原本寫的地方外面加上Directory<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory&gt;</span><br><span class="line">    &lt;IFModule mod_rewrite.c&gt;</span><br><span class="line">        RewriteEngine On</span><br><span class="line">        RewriteRule ^/index\.html$ / [R=301,L]</span><br><span class="line">    &lt;/IFModule&gt;</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a href="https://httpd.apache.org/docs/2.4/mod/core.html#allowoverride" target="_blank" rel="noopener">Allowoverride官方文件</a></p>
+</blockquote>
+<h1 id="AllowOverride-與-AllowOverrideList和htaccess的安全性設定"><a href="#AllowOverride-與-AllowOverrideList和htaccess的安全性設定" class="headerlink" title="AllowOverride 與 AllowOverrideList和htaccess的安全性設定"></a>AllowOverride 與 AllowOverrideList和htaccess的安全性設定</h1><ul>
+<li>上篇能運作是因為我們把apache2.conf中，AllowOverride 設為 All，這樣其實不太好因為這樣等於賦予.htaccess太大的權限</li>
+<li>可以直接取消apache2.conf中Directory /var/www的部分，直接到 /etc/apache2/sites-available/demo.XXX.tw.conf 加入 Directory</li>
+</ul>
+<p>/etc/apache2/sites-available/demo.XXX.tw.conf</p>
+<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory /var/www&gt;</span><br><span class="line">    Options FollowSymLinks</span><br><span class="line">    AllowOverride FileInfo(因為這個包含了AllowoverrideList中的RewriteEngine、RewriteRule功能)</span><br><span class="line">    AllowoverrideList &lt;IFModule mod_rewrite.c&gt; Deny</span><br><span class="line">    Require all granted</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+<p>.htaccess</p>
+<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;IFModule mod_rewrite.c&gt;</span><br><span class="line">    RewriteEngine On</span><br><span class="line">    RewriteRule ^/index\.html$ / [R=301,L]</span><br><span class="line">&lt;/IFModule&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="移動Log檔到個別專案資料夾"><a href="#移動Log檔到個別專案資料夾" class="headerlink" title="移動Log檔到個別專案資料夾"></a>移動Log檔到個別專案資料夾</h1><ul>
+<li>可進/etc/apache2/sites-available/demo.XXX.tw.conf更改<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ErrorLog /var/www/demo/logs/error.log</span><br><span class="line">CustomLog /var/www/demo/logs/access.log combind</span><br></pre></td></tr></table></figure>
+
+<h1 id="路徑變化前的條件判斷，RewriteCond-與-RewriteBase"><a href="#路徑變化前的條件判斷，RewriteCond-與-RewriteBase" class="headerlink" title="路徑變化前的條件判斷，RewriteCond 與 RewriteBase"></a>路徑變化前的條件判斷，RewriteCond 與 RewriteBase</h1><ul>
+<li>做兩件式，一是若網址搜尋的是不存在的檔案則導到404頁面(404.html)，二是若網址搜尋log目前狀況是可以看到，我們需要將他也導到404頁面<br>.htaccess<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;IFModule mod_rewrite.c&gt;</span><br><span class="line">    RewriteEngine On</span><br><span class="line">    <span class="comment"># 以根目錄為基準找</span></span><br><span class="line">    RewriteBase /</span><br><span class="line">    <span class="comment"># L是斷點的意思，如果符合就中止</span></span><br><span class="line">    RewriteRule ^/index\.html$ / [R=301,L]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果找不到post，導向post/404.html 而非原本的404.html</span></span><br><span class="line">    RewriteCond %&#123;REQUEST_FILENAME&#125; /ports/.*</span><br><span class="line">    RewriteCond %&#123;REQUEST_FILENAME&#125; !-f</span><br><span class="line">    RewriteRule ^ /posts/404.html [R=302,L]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果找不到首頁，導向首頁</span></span><br><span class="line">    RewriteCond %&#123;REQUEST_FILENAME&#125; !-f</span><br><span class="line">    RewriteCond %&#123;REQUEST_FILENAME&#125; !-d</span><br><span class="line">    RewriteRule ^ index.html [L]</span><br><span class="line"></span><br><span class="line">     <span class="comment"># 如果嘗試看logs，導向404.html</span></span><br><span class="line">     <span class="comment"># 使用302是因為目前404是代表現在not found，不代表以後也not found，使用301會鎖住</span></span><br><span class="line">    RewriteCond %&#123;REQUEST_FILENAME&#125; /logs/.*</span><br><span class="line">    RewriteCond %&#123;REQUEST_FILENAME&#125; !-d</span><br><span class="line">    RewriteRule ^ 404.html [R=302,L]</span><br><span class="line">&lt;/IFModule&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="架設靜態網站於VirtualBox-scp-指令"><a href="#架設靜態網站於VirtualBox-scp-指令" class="headerlink" title="架設靜態網站於VirtualBox(scp 指令)"></a>架設靜態網站於VirtualBox(scp 指令)</h1><ul>
+<li>複製/etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/progressbar.com.conf</li>
+<li>更改 progressbar.com.conf VirtualHost port號 &lt;VirtualHost *:8666&gt; ， DocumentRoot /var/www/progressbar</li>
+<li>在/var/www中建立 progressbar資料夾，sudo madir progressbar</li>
+<li>更改資料夾使用者群組，sudo chown mercue:mercue progressbar</li>
+<li>回到本機使用scp -r -P 8001 * <a href="mailto:mercue@127.0.0.1">mercue@127.0.0.1</a>:/var/www/progressbar </li>
+<li>開啟防火牆 sudo ufw allow 8666/tcp</li>
+<li>在/etc/apache2/ports.conf 中加入監聽port號，Listen 8666</li>
+<li>在本機 VirtualBox 中設定反向代理</li>
+</ul>
+<h1 id="看懂Chrome-Network-網站速度相關訊息與簡易壓力測試"><a href="#看懂Chrome-Network-網站速度相關訊息與簡易壓力測試" class="headerlink" title="看懂Chrome Network 網站速度相關訊息與簡易壓力測試"></a>看懂Chrome Network 網站速度相關訊息與簡易壓力測試</h1><ul>
+<li>使用檢查，查看NetWork資訊</li>
+<li>最下面一行範例 33 reuest |18.8KB | Finish 12.82s | DOMContent 300 ms | Load 1.23s(整個網站共有33 request ，傳送了18.8KB的資訊，全部的東西都拿到並顯示共花了 12.82s，文字在javascript長出DOM的時間 300 ms，若花費時間太長可能就是server有問題，若 Load 花費時間太長可能就是此網站的圖片同時被太多人access，導致server無法應付)</li>
+<li>測試網站速度MacOS預設就有這個指令，Linux則是安裝Apache後就會有。Windows可以使用VirtualBox裡面的上課用的Linux Console來執行。不要自己電腦訪問自己，這樣速度會太快不準。指令功用是可以幫你建立很多的連線去訪問預測試的網站<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ab -n 10 -c 10 [欲測試網站網址]</span><br></pre></td></tr></table></figure>
+
+<h1 id="利用github-page實現CDN概念與防止圖床被盜連"><a href="#利用github-page實現CDN概念與防止圖床被盜連" class="headerlink" title="利用github page實現CDN概念與防止圖床被盜連"></a>利用github page實現CDN概念與防止圖床被盜連</h1><ul>
+<li>將圖片都改為github上的圖片</li>
+<li>在progressbar.com.conf(使用的網站) 加上 IfModule<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;IFModule mod_rewrite.c&gt;</span><br><span class="line">    RewriteEngine On</span><br><span class="line">    RewriteCond %&#123;HTTP_REFERER&#125; !^http://progressbar.newbie.tw$ [NC]</span><br><span class="line">    RewriteCond %&#123;HTTP_REFERER&#125; !^http://progressbar.newbie.tw/.*$ [NC]</span><br><span class="line">    RewriteRule .*.(jpg|gif|png) <span class="string">"-"</span> [NC,F]</span><br><span class="line">    <span class="comment"># NC 不管大小寫，F是擋掉的意思，官網說這樣"-"就會變成403</span></span><br><span class="line">    RewriteRule .*.(jpg|gif|png) hater.png [NC,R]</span><br><span class="line">    <span class="comment"># 也可以寫成這樣表示把它轉到hater.png or 404.html</span></span><br><span class="line">&lt;/IFModule&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="module-headers-與防止網站被iframe嵌入"><a href="#module-headers-與防止網站被iframe嵌入" class="headerlink" title="module headers 與防止網站被iframe嵌入"></a>module headers 與防止網站被iframe嵌入</h1><ul>
+<li>到VirtualHost加上<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Header always append X-Frame-Option SAMEORIGIN</span><br></pre></td></tr></table></figure>
+<ul>
+<li>引入module<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo a2enmod headers</span><br></pre></td></tr></table></figure>
+<ul>
+<li>restart apache<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart apache2</span><br></pre></td></tr></table></figure>
+<ul>
+<li>若browser有header的功能才有作用，否則圖片還是會顯示</li>
+</ul>
+<h1 id="利用Let’s-Encrypt-安裝HTTPS與SSLProtocol變更"><a href="#利用Let’s-Encrypt-安裝HTTPS與SSLProtocol變更" class="headerlink" title="利用Let’s Encrypt 安裝HTTPS與SSLProtocol變更"></a>利用Let’s Encrypt 安裝HTTPS與SSLProtocol變更</h1><ul>
+<li>進入Let’s Encrypt官網getting start 中的cerbot</li>
+<li>選擇Apache Ubuntu18.04</li>
+<li>往下滑至Install 照著指令進行即可<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install software-properties-common</span><br><span class="line">$ sudo add-apt-repository universe</span><br><span class="line">$ sudo add-apt-repository ppa:certbot/certbot</span><br><span class="line">$ sudo apt-get update</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Install Certbot<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install certbot python3-certbot-apache</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Choose how you’d like to run Certbot，Either get and install your certificates…<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo certbot --apache</span><br></pre></td></tr></table></figure>
+<ul>
+<li>安裝完成之後需將原有網站的圖片檔案http改成https</li>
+<li>將VirtualHost中原本設置為http的地方改為https<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;IFModule mod_rewrite.c&gt;</span><br><span class="line">    RewriteEngine On</span><br><span class="line">    RewriteCond %&#123;HTTP_REFERER&#125; !^https://progressbar.newbie.tw$ [NC]</span><br><span class="line">    RewriteCond %&#123;HTTP_REFERER&#125; !^https://progressbar.newbie.tw/.*$ [NC]</span><br><span class="line">    RewriteRule .*.(jpg|gif|png) <span class="string">"-"</span> [NC,F]</span><br><span class="line">    <span class="comment"># NC 不管大小寫，F是擋掉的意思，官網說這樣"-"就會變成403</span></span><br><span class="line">    RewriteRule .*.(jpg|gif|png) hater.png [NC,R]</span><br><span class="line">    <span class="comment"># 也可以寫成這樣表示把它轉到hater.png or 404.html</span></span><br><span class="line">&lt;/IFModule&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>雖然是免費的但90天就要更新一次不然會過期，詳細方法在下一章節</li>
+<li>若想更改細項內容可以進入VirtualHost中最下方Let’s Encrypt自動加入的檔案，Include /etc/letsencrypt/options-ssl-apache.conf</li>
+</ul>
+<h1 id="crontab使用與Let’s-encrypt自動更新"><a href="#crontab使用與Let’s-encrypt自動更新" class="headerlink" title="crontab使用與Let’s encrypt自動更新"></a>crontab使用與Let’s encrypt自動更新</h1><ul>
+<li>官網有提供一個指令，90天會自動幫你更新<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo certbot renew --dry-run</span><br></pre></td></tr></table></figure>
+<ul>
+<li>因為不可能90天就進來做一次，只要是架設在Linux上面都會使用cronjob工具</li>
+<li>指令crontab -l 檢視目前有沒有任何的工作要做<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ crontab -l</span><br><span class="line">no crontab <span class="keyword">for</span> mercue</span><br></pre></td></tr></table></figure>
+<ul>
+<li>指令crontab -e 可以進行編輯</li>
+<li>選擇vim，找到# m h dom mon dow command，加上以下內容，此範例為每2分鐘做一次<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># m h dom mon dow command</span></span><br><span class="line">  */2 * * * * <span class="built_in">echo</span> <span class="string">"hello"</span> &gt; ~/hello.txt</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用sudo，設定自動執行，意即每個月不管是哪一天都要執行<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># m h dom mon dow command</span></span><br><span class="line">  0 0 1 * * certbot renew --dry-run</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a href="https://letsencrypt.org/zh-tw/getting-started/#" target="_blank" rel="noopener">Let’s Encrypt官方網站</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/23/linux-basic/" rel="prev" title="Linux 基礎指令">
+      <i class="fa fa-chevron-left"></i> Linux 基礎指令
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/12/OKHttp-leaked/" rel="next" title="OKHttp-leaked">
+      OKHttp-leaked <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安裝Apache2與建立第一個網頁"><span class="nav-number">1.</span> <span class="nav-text">安裝Apache2與建立第一個網頁</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#改變Ubuntu-監聽port號與初探反向代理"><span class="nav-number">2.</span> <span class="nav-text">改變Ubuntu 監聽port號與初探反向代理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ufw防火牆設定"><span class="nav-number">3.</span> <span class="nav-text">ufw防火牆設定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3種Apache-service的開關方式與它隱含的意思-systemctl-service-apache2"><span class="nav-number">4.</span> <span class="nav-text">3種Apache service的開關方式與它隱含的意思(systemctl, service, apache2)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#etc-底下的apache2檔案分佈用途介紹-amp-Apache-conf-詳細介紹-一-amp-Apache-conf-二-如何簡單的搞砸系統安全性-Directory-denied-granted-DocumentRoot"><span class="nav-number">5.</span> <span class="nav-text">etc 底下的apache2檔案分佈用途介紹 &amp; Apache.conf 詳細介紹(一) &amp; Apache.conf(二) 如何簡單的搞砸系統安全性 [Directory, denied, granted, DocumentRoot]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#補充-Option詳解"><span class="nav-number">6.</span> <span class="nav-text">[補充] Option詳解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#利用不同port號架設多重站台-VirtualHost-a2ensite-a2dissite"><span class="nav-number">7.</span> <span class="nav-text">利用不同port號架設多重站台(VirtualHost, a2ensite, a2dissite)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#網域網址設定，利用不同網址Domain架設多站台"><span class="nav-number">8.</span> <span class="nav-text">網域網址設定，利用不同網址Domain架設多站台</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#利用Rewrite-module-把index-html-導向首頁路徑-mod-rewrite"><span class="nav-number">9.</span> <span class="nav-text">利用Rewrite module 把index.html 導向首頁路徑(mod_rewrite)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用htaccess，RewriteRule在VirtualHost與htaccess之間的陷阱"><span class="nav-number">10.</span> <span class="nav-text">使用htaccess，RewriteRule在VirtualHost與htaccess之間的陷阱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AllowOverride-與-AllowOverrideList和htaccess的安全性設定"><span class="nav-number">11.</span> <span class="nav-text">AllowOverride 與 AllowOverrideList和htaccess的安全性設定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#移動Log檔到個別專案資料夾"><span class="nav-number">12.</span> <span class="nav-text">移動Log檔到個別專案資料夾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#路徑變化前的條件判斷，RewriteCond-與-RewriteBase"><span class="nav-number">13.</span> <span class="nav-text">路徑變化前的條件判斷，RewriteCond 與 RewriteBase</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#架設靜態網站於VirtualBox-scp-指令"><span class="nav-number">14.</span> <span class="nav-text">架設靜態網站於VirtualBox(scp 指令)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#看懂Chrome-Network-網站速度相關訊息與簡易壓力測試"><span class="nav-number">15.</span> <span class="nav-text">看懂Chrome Network 網站速度相關訊息與簡易壓力測試</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#利用github-page實現CDN概念與防止圖床被盜連"><span class="nav-number">16.</span> <span class="nav-text">利用github page實現CDN概念與防止圖床被盜連</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#module-headers-與防止網站被iframe嵌入"><span class="nav-number">17.</span> <span class="nav-text">module headers 與防止網站被iframe嵌入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#利用Let’s-Encrypt-安裝HTTPS與SSLProtocol變更"><span class="nav-number">18.</span> <span class="nav-text">利用Let’s Encrypt 安裝HTTPS與SSLProtocol變更</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#crontab使用與Let’s-encrypt自動更新"><span class="nav-number">19.</span> <span class="nav-text">crontab使用與Let’s encrypt自動更新</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Catherine Chen</p>
+  <div class="site-description" itemprop="description">Knowledge makes humble, ignorance makes proud.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/p2626k" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;p2626k" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:p2626k@gmail.com" title="E-Mail → mailto:p2626k@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100001562786457" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100001562786457" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/chen_yu_wun" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;chen_yu_wun" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Catherine Chen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '6e7cd30b8db14f63c094',
+      clientSecret: 'ad24555a3f5e288c45111deb76559907a1bd1d68',
+      repo        : 'p2626k.github.io',
+      owner       : 'p2626k',
+      admin       : ['p2626k'],
+      id          : '8783a5aa3f808aa72c35ca79a2307763',
+        language: 'zh-TW',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

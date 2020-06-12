@@ -20,24 +20,19 @@
     var CONFIG = {"hostname":"p2626k.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="安裝Windows Server 2016&#x2F;2019試用版，在180天後將會過期，過期後將發生每小時自動關機，解決方式為透過啟動 PowerShell 延長試用天數，最多可以操作六次，也就是延長三年">
+  <meta name="description" content="整理一下早上進修的學習內容，最近買了新的線上課程 Linux雲端伺服器，用AWS暸解Apache與Nginx，雖然一直都有在使用 Linux ，但為避免有遺漏，針對課程內學習到的新知做一下整理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何延長 Windows Server 2016&#x2F;2019 試用版 的適用期">
-<meta property="og:url" content="https://p2626k.github.io/2020/04/24/trial-period/index.html">
+<meta property="og:title" content="Linux 基礎指令">
+<meta property="og:url" content="https://p2626k.github.io/2020/05/23/linux-basic/index.html">
 <meta property="og:site_name" content="Catherine&#39;s blog">
-<meta property="og:description" content="安裝Windows Server 2016&#x2F;2019試用版，在180天後將會過期，過期後將發生每小時自動關機，解決方式為透過啟動 PowerShell 延長試用天數，最多可以操作六次，也就是延長三年">
+<meta property="og:description" content="整理一下早上進修的學習內容，最近買了新的線上課程 Linux雲端伺服器，用AWS暸解Apache與Nginx，雖然一直都有在使用 Linux ，但為避免有遺漏，針對課程內學習到的新知做一下整理">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-1.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-2.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-3.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-4.png">
-<meta property="article:published_time" content="2020-04-24T05:41:08.000Z">
-<meta property="article:modified_time" content="2020-04-24T08:06:14.933Z">
+<meta property="article:published_time" content="2020-05-23T07:43:12.000Z">
+<meta property="article:modified_time" content="2020-06-12T09:06:23.678Z">
 <meta property="article:author" content="Catherine Chen">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-1.png">
 
-<link rel="canonical" href="https://p2626k.github.io/2020/04/24/trial-period/">
+<link rel="canonical" href="https://p2626k.github.io/2020/05/23/linux-basic/">
 
 
 <script id="page-configurations">
@@ -50,7 +45,7 @@
   };
 </script>
 
-  <title>如何延長 Windows Server 2016/2019 試用版 的適用期 | Catherine's blog</title>
+  <title>Linux 基礎指令 | Catherine's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164797917-1"></script>
     <script>
@@ -171,7 +166,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://p2626k.github.io/2020/04/24/trial-period/">
+    <link itemprop="mainEntityOfPage" href="https://p2626k.github.io/2020/05/23/linux-basic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -184,7 +179,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          如何延長 Windows Server 2016/2019 試用版 的適用期
+          Linux 基礎指令
         </h1>
 
         <div class="post-meta">
@@ -193,17 +188,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-04-24 13:41:08 / Modified: 16:06:14" itemprop="dateCreated datePublished" datetime="2020-04-24T13:41:08+08:00">2020-04-24</time>
+              <time title="Created: 2020-05-23 15:43:12" itemprop="dateCreated datePublished" datetime="2020-05-23T15:43:12+08:00">2020-05-23</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-12 17:06:23" itemprop="dateModified" datetime="2020-06-12T17:06:23+08:00">2020-06-12</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/WindowServer/" itemprop="url" rel="index"><span itemprop="name">WindowServer</span></a>
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
                 </span>
             </span>
 
@@ -225,39 +226,32 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>安裝Windows Server 2016/2019試用版，在180天後將會過期，過期後將發生每小時自動關機，解決方式為透過啟動 PowerShell 延長試用天數，最多可以操作六次，也就是延長三年</p>
-<a id="more"></a>
-
-<p>若您尚未下載，請在此處下載：</p>
-<p><a href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2016/" target="_blank" rel="noopener">https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2016/</a></p>
-<p><a href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019/" target="_blank" rel="noopener">https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019/</a></p>
-<h2 id="確認到期天數"><a href="#確認到期天數" class="headerlink" title="確認到期天數"></a>確認到期天數</h2><h3 id="2種方式確認"><a href="#2種方式確認" class="headerlink" title="2種方式確認"></a>2種方式確認</h3><p>1.使用桌面右下角確認：</p>
-<p><img src="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-1.png" alt="桌面圖片"></p>
-<p>2.使用 PowerShell 確認：</p>
-<p>  啟動 PowerShell 並運行 slmgr</p>
+        <p>整理一下早上進修的學習內容，最近買了新的線上課程 <a href="https://progressbar.tw/courses/13" target="_blank" rel="noopener">Linux雲端伺服器，用AWS暸解Apache與Nginx</a>，雖然一直都有在使用 Linux ，但為避免有遺漏，針對課程內學習到的新知做一下整理 </p>
+<a id="more"></a> 
+<h1 id="產生空白資料夾、檔案與命名注意事項-mkdir-touch"><a href="#產生空白資料夾、檔案與命名注意事項-mkdir-touch" class="headerlink" title="產生空白資料夾、檔案與命名注意事項(mkdir, touch)"></a>產生空白資料夾、檔案與命名注意事項(mkdir, touch)</h1><h2 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h2><p>使用 mkdir 指令建立目錄時，若相同檔名的資料夾已存在，則會出現錯誤訊息，如下</p>
 <p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ slmgr -dlv</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir ECRWD</span><br><span class="line">mkdir: ECRWD: File exists</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-2.png" alt="PowerShell顯示剩餘日期與次數"></p>
-<h2 id="如何延長期限"><a href="#如何延長期限" class="headerlink" title="如何延長期限"></a>如何延長期限</h2><h3 id="透過-PowerShell-運行-slmgr-rearm-將其延長180天"><a href="#透過-PowerShell-運行-slmgr-rearm-將其延長180天" class="headerlink" title="透過 PowerShell 運行 slmgr -rearm 將其延長180天"></a>透過 PowerShell 運行 slmgr -rearm 將其延長180天</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+<p>一般在 excute shell script 時，若發生此狀況可能造成執行暫停的狀況，如需避免此問題，可以利用 mkdir -p 參數使『建立資料夾已存在』的情況，不要顯示錯誤訊息，使之繼續執行 </p>
+<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ slmgr -rearm</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p  ECRWD</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-3.png" alt="PowerShell運行延長180天"></p>
-<h3 id="重新啟動電腦"><a href="#重新啟動電腦" class="headerlink" title="重新啟動電腦"></a>重新啟動電腦</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+<h1 id="文字輸出檔案與串連-echo-printf-cat"><a href="#文字輸出檔案與串連-echo-printf-cat" class="headerlink" title="文字輸出檔案與串連(echo, printf, cat)"></a>文字輸出檔案與串連(echo, printf, cat)</h1><h2 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h2><p>印出 “hi” </p>
+<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ Restart-Computer</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"hi"</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="重新啟動後，打開-PowerShell-並檢查您的設置"><a href="#重新啟動後，打開-PowerShell-並檢查您的設置" class="headerlink" title="重新啟動後，打開 PowerShell 並檢查您的設置"></a>重新啟動後，打開 PowerShell 並檢查您的設置</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+<p>若使用 “&gt;” 將 “hi” 輸出到 1.txt 檔案 ，如將 “hi” 改成 “hello”，再執行一次指令， “hello” 將覆蓋 “hi”</p>
+<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ slmgr -dli</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"hi"</span> &gt; 1.txt</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-4.png" alt="PowerShell運行結果"></p>
-<table><tr><td bgcolor=#008800>此篇文章僅記錄整理遇到問題的解法</td></tr></table>
+<p>若需要接續著寫下去，則可使用 “&gt;&gt;” ，將 “hi” 輸出到 1.txt 檔案 ，如將 “hi” 改成 “hello”，再執行一次指令， 將會出現 </p>
+<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
 
-<h2 id="Refernce"><a href="#Refernce" class="headerlink" title="Refernce"></a>Refernce</h2><p>[文章出處]<a href="https://sid-500.com/2017/08/08/windows-server-2016-evaluation-how-to-extend-the-trial-period/" target="_blank" rel="noopener">https://sid-500.com/2017/08/08/windows-server-2016-evaluation-how-to-extend-the-trial-period/</a></p>
-
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"hi"</span> &gt; 1.txt</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"hello"</span> &gt;&gt; 1.txt</span><br><span class="line">$ cat 1.txt</span><br><span class="line">hi</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -291,12 +285,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/04/20/hello-world/" rel="prev" title="Hexo + GitHub pages 初學者全記錄">
-      <i class="fa fa-chevron-left"></i> Hexo + GitHub pages 初學者全記錄
+    <a href="/2020/04/24/trial-period/" rel="prev" title="如何延長 Windows Server 2016/2019 試用版 的適用期">
+      <i class="fa fa-chevron-left"></i> 如何延長 Windows Server 2016/2019 試用版 的適用期
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/05/23/linux-basic/" rel="next" title="Linux 基礎指令">
-      Linux 基礎指令 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/05/25/apache-course-note/" rel="next" title="apache 線上課程筆記">
+      apache 線上課程筆記 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -357,7 +351,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#確認到期天數"><span class="nav-number">1.</span> <span class="nav-text">確認到期天數</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2種方式確認"><span class="nav-number">1.1.</span> <span class="nav-text">2種方式確認</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何延長期限"><span class="nav-number">2.</span> <span class="nav-text">如何延長期限</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#透過-PowerShell-運行-slmgr-rearm-將其延長180天"><span class="nav-number">2.1.</span> <span class="nav-text">透過 PowerShell 運行 slmgr -rearm 將其延長180天</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重新啟動電腦"><span class="nav-number">2.2.</span> <span class="nav-text">重新啟動電腦</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重新啟動後，打開-PowerShell-並檢查您的設置"><span class="nav-number">2.3.</span> <span class="nav-text">重新啟動後，打開 PowerShell 並檢查您的設置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Refernce"><span class="nav-number">3.</span> <span class="nav-text">Refernce</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#產生空白資料夾、檔案與命名注意事項-mkdir-touch"><span class="nav-number">1.</span> <span class="nav-text">產生空白資料夾、檔案與命名注意事項(mkdir, touch)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mkdir"><span class="nav-number">1.1.</span> <span class="nav-text">mkdir</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文字輸出檔案與串連-echo-printf-cat"><span class="nav-number">2.</span> <span class="nav-text">文字輸出檔案與串連(echo, printf, cat)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#echo"><span class="nav-number">2.1.</span> <span class="nav-text">echo</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -514,7 +508,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'p2626k.github.io',
       owner       : 'p2626k',
       admin       : ['p2626k'],
-      id          : 'dddbbd8d827ffd6a492710d36ca86095',
+      id          : '3bb32da74da4a615ed5614a421d2d5f9',
         language: 'zh-TW',
       distractionFreeMode: true
     });

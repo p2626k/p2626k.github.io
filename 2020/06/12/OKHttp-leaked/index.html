@@ -20,24 +20,19 @@
     var CONFIG = {"hostname":"p2626k.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="安裝Windows Server 2016&#x2F;2019試用版，在180天後將會過期，過期後將發生每小時自動關機，解決方式為透過啟動 PowerShell 延長試用天數，最多可以操作六次，也就是延長三年">
+  <meta name="description" content="使用OKHttp 3時，一直收到Leaked 的警告，上網了解後才發現需要關閉流，以下為錯誤造成的原因，以及修正的方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何延長 Windows Server 2016&#x2F;2019 試用版 的適用期">
-<meta property="og:url" content="https://p2626k.github.io/2020/04/24/trial-period/index.html">
+<meta property="og:title" content="OKHttp-leaked">
+<meta property="og:url" content="https://p2626k.github.io/2020/06/12/OKHttp-leaked/index.html">
 <meta property="og:site_name" content="Catherine&#39;s blog">
-<meta property="og:description" content="安裝Windows Server 2016&#x2F;2019試用版，在180天後將會過期，過期後將發生每小時自動關機，解決方式為透過啟動 PowerShell 延長試用天數，最多可以操作六次，也就是延長三年">
+<meta property="og:description" content="使用OKHttp 3時，一直收到Leaked 的警告，上網了解後才發現需要關閉流，以下為錯誤造成的原因，以及修正的方法">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-1.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-2.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-3.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-4.png">
-<meta property="article:published_time" content="2020-04-24T05:41:08.000Z">
-<meta property="article:modified_time" content="2020-04-24T08:06:14.933Z">
+<meta property="article:published_time" content="2020-06-12T06:17:29.000Z">
+<meta property="article:modified_time" content="2020-06-12T08:28:29.675Z">
 <meta property="article:author" content="Catherine Chen">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-1.png">
 
-<link rel="canonical" href="https://p2626k.github.io/2020/04/24/trial-period/">
+<link rel="canonical" href="https://p2626k.github.io/2020/06/12/OKHttp-leaked/">
 
 
 <script id="page-configurations">
@@ -50,7 +45,7 @@
   };
 </script>
 
-  <title>如何延長 Windows Server 2016/2019 試用版 的適用期 | Catherine's blog</title>
+  <title>OKHttp-leaked | Catherine's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164797917-1"></script>
     <script>
@@ -171,7 +166,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://p2626k.github.io/2020/04/24/trial-period/">
+    <link itemprop="mainEntityOfPage" href="https://p2626k.github.io/2020/06/12/OKHttp-leaked/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -184,7 +179,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          如何延長 Windows Server 2016/2019 試用版 的適用期
+          OKHttp-leaked
         </h1>
 
         <div class="post-meta">
@@ -195,7 +190,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-04-24 13:41:08 / Modified: 16:06:14" itemprop="dateCreated datePublished" datetime="2020-04-24T13:41:08+08:00">2020-04-24</time>
+              <time title="Created: 2020-06-12 14:17:29 / Modified: 16:28:29" itemprop="dateCreated datePublished" datetime="2020-06-12T14:17:29+08:00">2020-06-12</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -203,7 +198,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/WindowServer/" itemprop="url" rel="index"><span itemprop="name">WindowServer</span></a>
+                  <a href="/categories/Project-Solution/" itemprop="url" rel="index"><span itemprop="name">Project_Solution</span></a>
                 </span>
             </span>
 
@@ -225,38 +220,28 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>安裝Windows Server 2016/2019試用版，在180天後將會過期，過期後將發生每小時自動關機，解決方式為透過啟動 PowerShell 延長試用天數，最多可以操作六次，也就是延長三年</p>
-<a id="more"></a>
+        <p>使用OKHttp 3時，一直收到Leaked 的警告，上網了解後才發現需要關閉流，以下為錯誤造成的原因，以及修正的方法 </p>
+<a id="more"></a> 
 
-<p>若您尚未下載，請在此處下載：</p>
-<p><a href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2016/" target="_blank" rel="noopener">https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2016/</a></p>
-<p><a href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019/" target="_blank" rel="noopener">https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019/</a></p>
-<h2 id="確認到期天數"><a href="#確認到期天數" class="headerlink" title="確認到期天數"></a>確認到期天數</h2><h3 id="2種方式確認"><a href="#2種方式確認" class="headerlink" title="2種方式確認"></a>2種方式確認</h3><p>1.使用桌面右下角確認：</p>
-<p><img src="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-1.png" alt="桌面圖片"></p>
-<p>2.使用 PowerShell 確認：</p>
-<p>  啟動 PowerShell 並運行 slmgr</p>
-<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ slmgr -dlv</span><br></pre></td></tr></table></figure>
+<p>你將發現Eclipse一直提醒</p>
+<p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
 
-<p><img src="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-2.png" alt="PowerShell顯示剩餘日期與次數"></p>
-<h2 id="如何延長期限"><a href="#如何延長期限" class="headerlink" title="如何延長期限"></a>如何延長期限</h2><h3 id="透過-PowerShell-運行-slmgr-rearm-將其延長180天"><a href="#透過-PowerShell-運行-slmgr-rearm-將其延長180天" class="headerlink" title="透過 PowerShell 運行 slmgr -rearm 將其延長180天"></a>透過 PowerShell 運行 slmgr -rearm 將其延長180天</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">六月 <span class="number">08</span>, <span class="number">2020</span> <span class="number">9</span>:<span class="number">20</span>:<span class="number">45</span> 上午 okhttp3.internal.platform.Platform <span class="keyword">log</span></span><br><span class="line">警告: A <span class="keyword">connection</span> <span class="keyword">to</span> http://                         / was leaked. Did you forget <span class="keyword">to</span> <span class="keyword">close</span> a response body? <span class="keyword">To</span> see <span class="keyword">where</span> this was allocated, <span class="keyword">set</span> the OkHttpClient logger <span class="keyword">level</span> <span class="keyword">to</span> FINE: Logger.getLogger(OkHttpClient.<span class="keyword">class</span>.getName()).setLevel(<span class="keyword">Level</span>.FINE);</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ slmgr -rearm</span><br></pre></td></tr></table></figure>
+<p>以下為錯誤寫法 </p>
+<p class="code-caption" data-lang="java" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
 
-<p><img src="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-3.png" alt="PowerShell運行延長180天"></p>
-<h3 id="重新啟動電腦"><a href="#重新啟動電腦" class="headerlink" title="重新啟動電腦"></a>重新啟動電腦</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">sendECPost</span><span class="params">(String requestUrl, String data)</span> <span class="keyword">throws</span> ServerUnableException </span>&#123;</span><br><span class="line">        String conyentType = Constants.CONTENT_TYPE_JSON;</span><br><span class="line">        log.info(<span class="string">"conyentType :"</span> + conyentType);</span><br><span class="line"></span><br><span class="line">        OkHttpClient client = <span class="keyword">new</span> OkHttpClient().newBuilder().sslSocketFactory(createSSLSocketFactory())</span><br><span class="line">                .hostnameVerifier(<span class="keyword">new</span> HostnameVerifier() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">verify</span><span class="params">(String hostname, SSLSession session)</span> </span>&#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).build();</span><br><span class="line"></span><br><span class="line">        MediaType mediaType = MediaType.parse(conyentType);</span><br><span class="line">        okhttp3.RequestBody requestBody = okhttp3.RequestBody.create(mediaType, data);</span><br><span class="line">        Request request = <span class="keyword">new</span> Request.Builder().url(requestUrl).post(requestBody).build();</span><br><span class="line">        String responseStr = <span class="keyword">null</span>;</span><br><span class="line">        Call call = client.newCall(request);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Response response = call.execute();</span><br><span class="line">            log.info(response);</span><br><span class="line">            <span class="keyword">if</span> (!response.isSuccessful()) &#123;</span><br><span class="line">                log.info(<span class="string">"response error msg: "</span> + response.message());</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> CustomException.ServerUnableException();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                responseStr = response.body().string().replace(<span class="string">"\n"</span>, <span class="string">""</span>);</span><br><span class="line">                response.body().close();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            log.error(e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> responseStr;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ Restart-Computer</span><br></pre></td></tr></table></figure>
+<p>該如何解決這個問題呢？在response code=200也就是正常的狀況下，都會調用.string()來關閉流，但是若不是此情況，將不會關閉，因此造成leaked，那我們只需在非正常狀況下也關掉流即可，程式碼如下：</p>
+<p class="code-caption" data-lang="java" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
 
-<h3 id="重新啟動後，打開-PowerShell-並檢查您的設置"><a href="#重新啟動後，打開-PowerShell-並檢查您的設置" class="headerlink" title="重新啟動後，打開 PowerShell 並檢查您的設置"></a>重新啟動後，打開 PowerShell 並檢查您的設置</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">sendECPost</span><span class="params">(String requestUrl, String data)</span> <span class="keyword">throws</span> ServerUnableException </span>&#123;</span><br><span class="line">        String conyentType = Constants.CONTENT_TYPE_JSON;</span><br><span class="line">        log.info(<span class="string">"conyentType :"</span> + conyentType);</span><br><span class="line"></span><br><span class="line">        OkHttpClient client = <span class="keyword">new</span> OkHttpClient().newBuilder().sslSocketFactory(createSSLSocketFactory())</span><br><span class="line">                .hostnameVerifier(<span class="keyword">new</span> HostnameVerifier() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">verify</span><span class="params">(String hostname, SSLSession session)</span> </span>&#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).build();</span><br><span class="line"></span><br><span class="line">        MediaType mediaType = MediaType.parse(conyentType);</span><br><span class="line">        okhttp3.RequestBody requestBody = okhttp3.RequestBody.create(mediaType, data);</span><br><span class="line">        Request request = <span class="keyword">new</span> Request.Builder().url(requestUrl).post(requestBody).build();</span><br><span class="line">        String responseStr = <span class="keyword">null</span>;</span><br><span class="line">        Call call = client.newCall(request);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Response response = call.execute();</span><br><span class="line">            log.info(response);</span><br><span class="line">            <span class="keyword">if</span> (!response.isSuccessful()) &#123;</span><br><span class="line">                log.info(<span class="string">"response error msg: "</span> + response.message());</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> CustomException.ServerUnableException();</span><br><span class="line">                response.body().close();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                responseStr = response.body().string().replace(<span class="string">"\n"</span>, <span class="string">""</span>);</span><br><span class="line">                response.body().close();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            log.error(e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> responseStr;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ slmgr -dli</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/p2626k/MyPostImage/master/images/window-server/windows-server-4.png" alt="PowerShell運行結果"></p>
-<table><tr><td bgcolor=#008800>此篇文章僅記錄整理遇到問題的解法</td></tr></table>
-
-<h2 id="Refernce"><a href="#Refernce" class="headerlink" title="Refernce"></a>Refernce</h2><p>[文章出處]<a href="https://sid-500.com/2017/08/08/windows-server-2016-evaluation-how-to-extend-the-trial-period/" target="_blank" rel="noopener">https://sid-500.com/2017/08/08/windows-server-2016-evaluation-how-to-extend-the-trial-period/</a></p>
+<blockquote>
+<p><a href="https://www.it-swarm.dev/zh/java/okhttp%EF%BC%9A%E9%81%BF%E5%85%8D%E6%B3%84%E6%BC%8F%E8%BF%9E%E6%8E%A5%E8%AD%A6%E5%91%8A/825583451/" target="_blank" rel="noopener">OkHttp：避免泄漏连接警告</a></p>
+</blockquote>
 
     </div>
 
@@ -291,12 +276,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/04/20/hello-world/" rel="prev" title="Hexo + GitHub pages 初學者全記錄">
-      <i class="fa fa-chevron-left"></i> Hexo + GitHub pages 初學者全記錄
+    <a href="/2020/05/25/apache-course-note/" rel="prev" title="apache 線上課程筆記">
+      <i class="fa fa-chevron-left"></i> apache 線上課程筆記
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/05/23/linux-basic/" rel="next" title="Linux 基礎指令">
-      Linux 基礎指令 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/06/12/OpenSUSE-install/" rel="next" title="OpenSUSE-install">
+      OpenSUSE-install <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -357,7 +342,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#確認到期天數"><span class="nav-number">1.</span> <span class="nav-text">確認到期天數</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2種方式確認"><span class="nav-number">1.1.</span> <span class="nav-text">2種方式確認</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何延長期限"><span class="nav-number">2.</span> <span class="nav-text">如何延長期限</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#透過-PowerShell-運行-slmgr-rearm-將其延長180天"><span class="nav-number">2.1.</span> <span class="nav-text">透過 PowerShell 運行 slmgr -rearm 將其延長180天</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重新啟動電腦"><span class="nav-number">2.2.</span> <span class="nav-text">重新啟動電腦</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重新啟動後，打開-PowerShell-並檢查您的設置"><span class="nav-number">2.3.</span> <span class="nav-text">重新啟動後，打開 PowerShell 並檢查您的設置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Refernce"><span class="nav-number">3.</span> <span class="nav-text">Refernce</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -514,7 +498,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'p2626k.github.io',
       owner       : 'p2626k',
       admin       : ['p2626k'],
-      id          : 'dddbbd8d827ffd6a492710d36ca86095',
+      id          : '9ef643f0ea60738f62d35904c0717f4e',
         language: 'zh-TW',
       distractionFreeMode: true
     });
