@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"p2626k.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="這篇要介紹在 OpenSUSE 上安裝Nginx、Java、Tomcat，並將前端畫面放置在Nginx，後端放置在Tomcat中，當中碰到小卡關的地方  安裝軟體時，會有儲存庫缺失問題，需要加入儲存庫 Tomcat因為Java安裝路徑不對，無法啟動 Nginx如何設置才讀到到畫面 前端畫面call後端發生CORS問題">
+  <meta name="description" content="這篇要介紹在 OpenSUSE 上安裝Nginx、Java、Tomcat，並將前端畫面放置在Nginx，後端放置在Tomcat中，當中碰到小卡關的地方  安裝軟體時，會有儲存庫缺失問題，需要加入儲存庫 Tomcat因為Java安裝路徑不對，無法啟動 同樣的安裝指令安裝起來的Java版本不同 Nginx如何設置才讀到到畫面 前端畫面call後端發生CORS問題">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenSUSE-install">
 <meta property="og:url" content="https://p2626k.github.io/2020/06/12/OpenSUSE-install/index.html">
 <meta property="og:site_name" content="Catherine&#39;s blog">
-<meta property="og:description" content="這篇要介紹在 OpenSUSE 上安裝Nginx、Java、Tomcat，並將前端畫面放置在Nginx，後端放置在Tomcat中，當中碰到小卡關的地方  安裝軟體時，會有儲存庫缺失問題，需要加入儲存庫 Tomcat因為Java安裝路徑不對，無法啟動 Nginx如何設置才讀到到畫面 前端畫面call後端發生CORS問題">
+<meta property="og:description" content="這篇要介紹在 OpenSUSE 上安裝Nginx、Java、Tomcat，並將前端畫面放置在Nginx，後端放置在Tomcat中，當中碰到小卡關的地方  安裝軟體時，會有儲存庫缺失問題，需要加入儲存庫 Tomcat因為Java安裝路徑不對，無法啟動 同樣的安裝指令安裝起來的Java版本不同 Nginx如何設置才讀到到畫面 前端畫面call後端發生CORS問題">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-06-12T06:34:19.000Z">
-<meta property="article:modified_time" content="2020-06-12T09:02:27.920Z">
+<meta property="article:modified_time" content="2020-06-17T07:06:26.704Z">
 <meta property="article:author" content="Catherine Chen">
 <meta name="twitter:card" content="summary">
 
@@ -188,10 +188,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-06-12 14:34:19 / Modified: 17:02:27" itemprop="dateCreated datePublished" datetime="2020-06-12T14:34:19+08:00">2020-06-12</time>
+              <time title="Created: 2020-06-12 14:34:19" itemprop="dateCreated datePublished" datetime="2020-06-12T14:34:19+08:00">2020-06-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-17 15:06:26" itemprop="dateModified" datetime="2020-06-17T15:06:26+08:00">2020-06-17</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -224,6 +230,7 @@
 <ol>
 <li>安裝軟體時，會有儲存庫缺失問題，需要加入儲存庫</li>
 <li>Tomcat因為Java安裝路徑不對，無法啟動</li>
+<li>同樣的安裝指令安裝起來的Java版本不同</li>
 <li>Nginx如何設置才讀到到畫面</li>
 <li>前端畫面call後端發生CORS問題</li>
 </ol>
@@ -310,6 +317,41 @@
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status tomcat</span><br></pre></td></tr></table></figure>
 
+
+<h1 id="同樣的安裝指令安裝起來的Java版本不同"><a href="#同樣的安裝指令安裝起來的Java版本不同" class="headerlink" title="同樣的安裝指令安裝起來的Java版本不同"></a>同樣的安裝指令安裝起來的Java版本不同</h1><p>去客戶那邊安裝時，測試環境我安裝起來是1.8.0_252，客戶自行安裝的java版本卻變成1.8.0_202，猜測可能是OpenSuse跟Suse的repository不一樣，故採用直接手動安裝的方式</p>
+<ol>
+<li>使用<a href="https://adoptopenjdk.net/releases.html?variant=openjdk8&jvmVariant=hotspot" target="_blank" rel="noopener">AdoptOpenJDK</a></li>
+<li>選擇欲安裝的版本與系統，把.tar.gz檔案載下來</li>
+<li>scp 方式丟上遠端server</li>
+<li>cp 到預安裝的路徑，並解壓縮<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo tar xvf /usr/lib64/java/OpenJDK8U-jre_x64_linux_hotspot_8u252b09.tar.gz -C /usr/lib64/java --strip-components=1</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>設定環境變數<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/profile</span><br><span class="line"><span class="comment">#最後一行加入</span></span><br><span class="line"><span class="comment">#set java info</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/lib64/java</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">"<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span>"</span></span><br></pre></td></tr></table></figure>
+<p>6.reload /etc/profile</p>
+<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ . /etc/profile</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>檢查java版本<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ java -version</span><br><span class="line">openjdk version <span class="string">"1.8.0_252"</span></span><br><span class="line">OpenJDK Runtime Environment (AdoptOpenJDK)(build 1.8.0_252-b09)</span><br><span class="line">OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.252-b09, mixed mode)</span><br></pre></td></tr></table></figure>
+<ol start="8">
+<li>將Tomcat中的java路徑更改後暫停再重啟，確認CGroup的啟動路徑已經改為設定的環境變數<p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
+
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/systemd/system/tomcat.service</span><br><span class="line">$ sudo systemctl <span class="built_in">enable</span> tomcat</span><br><span class="line">$ sudo systemctl daemon-reload</span><br><span class="line">$ sudo systemctl start tomcat</span><br><span class="line">$ sudo systemctl status tomcat</span><br><span class="line">tomcat.service - Apache Tomcat Web Application Container</span><br><span class="line">   Loaded: loaded (/etc/systemd/system/tomcat.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since 三 2020-06-17 13:58:34 CST; 23min ago</span><br><span class="line">  Process: 14578 ExecStop=/opt/tomcat/bin/shutdown.sh (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 14628 ExecStart=/opt/tomcat/bin/startup.sh (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 14635 (java)</span><br><span class="line">    Tasks: 31 (<span class="built_in">limit</span>: 512)</span><br><span class="line">   CGroup: /system.slice/tomcat.service</span><br><span class="line">           └─14635 /usr/lib64/java/bin/java -Djava.util.logging.config.file=/opt/tomcat/conf/logging.properties -Dja...</span><br><span class="line"></span><br><span class="line"> 6月 17 13:58:34 linux-g5k0 systemd[1]: Starting Apache Tomcat Web Application Container...</span><br><span class="line"> 6月 17 13:58:34 linux-g5k0 startup.sh[14628]: Tomcat started.</span><br><span class="line"> 6月 17 13:58:34 linux-g5k0 systemd[1]: Started Apache Tomcat Web Application Container.</span><br></pre></td></tr></table></figure>
+
 <h1 id="Nginx如何設置才讀到到畫面"><a href="#Nginx如何設置才讀到到畫面" class="headerlink" title="Nginx如何設置才讀到到畫面"></a>Nginx如何設置才讀到到畫面</h1><p>加入nginx repository</p>
 <p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="code" data-labels_right=":" data-labels_copy=""><span class="code-caption-label"></span><a class="code-caption-copy"></a></p>
 
@@ -344,7 +386,6 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Headers: X-requested-with, Content-Type</span><br><span class="line">Access-Control-Allow-Methods: POST, GET, PUT, OPTIONS, DELETE</span><br><span class="line">Access-Control-Allow-Origin: *</span><br><span class="line">Access-Control-Max-Age: 3600</span><br><span class="line">Allow: GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Content-Length: 0</span><br><span class="line">Date: Fri, 12 Jun 2020 02:37:43 GMT</span><br><span class="line">Keep-Alive: timeout=20</span><br><span class="line"></span><br><span class="line">Request Headers view <span class="built_in">source</span></span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-TW, zh; q=0.9,en-US; q=0.8,en; q=0.7, zh-CN; q=0.6 </span><br><span class="line">Access-Control-Request-Headers: authorization, content-type</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CORSFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest req, ServletResponse res, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">        HttpServletResponse response = (HttpServletResponse) res;</span><br><span class="line">        HttpServletRequest request = (HttpServletRequest) req;</span><br><span class="line">        request.setCharacterEncoding(<span class="string">"UTF-8"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Methods"</span>, <span class="string">"POST, GET, PUT, OPTIONS, DELETE"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Max-Age"</span>, <span class="string">"3600"</span>);</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"X-requested-with, Content-Type, authorization"</span>);</span><br><span class="line">        chain.doFilter(req, res);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(FilterConfig filterConfig)</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 
 <blockquote>
 <p><a href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS" target="_blank" rel="noopener">跨來源資源共用（CORS）</a></p>
@@ -386,7 +427,10 @@
     <a href="/2020/06/12/OKHttp-leaked/" rel="prev" title="OKHttp-leaked">
       <i class="fa fa-chevron-left"></i> OKHttp-leaked
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/17/AWS-course/" rel="next" title="AWS-course">
+      AWS-course <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -446,7 +490,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安裝軟體時，會有儲存庫缺失問題，需要加入儲存庫"><span class="nav-number">1.</span> <span class="nav-text">安裝軟體時，會有儲存庫缺失問題，需要加入儲存庫</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat因為Java安裝路徑不對，無法啟動"><span class="nav-number">2.</span> <span class="nav-text">Tomcat因為Java安裝路徑不對，無法啟動</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#設定開機啟動"><span class="nav-number">3.</span> <span class="nav-text">設定開機啟動</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重讀service腳"><span class="nav-number">4.</span> <span class="nav-text">重讀service腳</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#啟動tomcat"><span class="nav-number">5.</span> <span class="nav-text">啟動tomcat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#確認tomcat"><span class="nav-number">6.</span> <span class="nav-text">確認tomcat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nginx如何設置才讀到到畫面"><span class="nav-number">7.</span> <span class="nav-text">Nginx如何設置才讀到到畫面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前端畫面call後端發生CORS問題"><span class="nav-number">8.</span> <span class="nav-text">前端畫面call後端發生CORS問題</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安裝軟體時，會有儲存庫缺失問題，需要加入儲存庫"><span class="nav-number">1.</span> <span class="nav-text">安裝軟體時，會有儲存庫缺失問題，需要加入儲存庫</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat因為Java安裝路徑不對，無法啟動"><span class="nav-number">2.</span> <span class="nav-text">Tomcat因為Java安裝路徑不對，無法啟動</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#設定開機啟動"><span class="nav-number">3.</span> <span class="nav-text">設定開機啟動</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重讀service腳"><span class="nav-number">4.</span> <span class="nav-text">重讀service腳</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#啟動tomcat"><span class="nav-number">5.</span> <span class="nav-text">啟動tomcat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#確認tomcat"><span class="nav-number">6.</span> <span class="nav-text">確認tomcat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#同樣的安裝指令安裝起來的Java版本不同"><span class="nav-number">7.</span> <span class="nav-text">同樣的安裝指令安裝起來的Java版本不同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nginx如何設置才讀到到畫面"><span class="nav-number">8.</span> <span class="nav-text">Nginx如何設置才讀到到畫面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前端畫面call後端發生CORS問題"><span class="nav-number">9.</span> <span class="nav-text">前端畫面call後端發生CORS問題</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -460,14 +504,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
